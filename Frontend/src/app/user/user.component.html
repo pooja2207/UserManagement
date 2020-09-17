@@ -1,0 +1,157 @@
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+<hr>
+<div class="container bootstrap snippets bootdey">
+    <div class="row">
+        <h1>User Records</h1>
+       <div class="" style="float: right;">
+        <a href="" class="head-link" data-toggle="modal" data-target="#myModal" >Add New User</a>
+           
+       </div>
+        <div class="col-lg-12">
+            <div class="main-box no-header clearfix">
+                <div class="main-box-body clearfix">
+                    <div class="table-responsive">
+                        <table class="table user-list">
+                            <thead>
+                                <tr>
+                                <th><span>Avatar</span></th>
+                                <th><span>Name</span></th>
+                                <th><span>Email</span></th>
+                                <th><span>Experience</span></th>
+                                <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="userDataLength == 0">
+                                    <td style="text-align: center;">No Users found</td>
+                                </tr>
+                                <tr *ngFor="let Data of userData">
+                                    <td>
+                                        <img  *ngIf="Data.profile != null" [src]="imagePath +'/'+ data.image + '/'+ data.image" >
+                                        <ng-template [ngIf]="Data.profile === null">
+                                            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="">
+                                        </ng-template>
+                                        
+                                    </td>
+                                    <td>{{Data.name}}</td>
+                                    <td>
+                                        <a href="#">{{Data.email}}</a>
+                                    </td>
+                                    <td>  {{Data.join_date  |  date:'fullDate' }}</td>
+                                    <td style="width: 20%;">
+                                       
+                                        <a href="#" class="table-link danger">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal add-user" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add New Record</h4>
+                <button #closebtn type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <form [formGroup]="UserForm"  (ngSubmit)="SubmitForm(UserForm.value)">
+                <div class="modal-body">
+                    <div class="add-user-form">
+                         
+                             <!-- <div class="form-row form-spacer">
+                                 <div class="upload-pic">
+                                     <img *ngIf="previewUrl" [src]="previewUrl" style="width: 100%;">
+                                   <ng-template [ngIf]="previewUrl === null">
+                                     <img src="../../assets/images/default-img.png" alt="image"/>
+                                   </ng-template>
+                                     <div class="upload-btn-wrapper">
+                                         <button class="btn1"><img src="../../assets/images/photo.svg"></button>
+                                         <input #myfile type="file" formControlName="myfile" name="myfile" (change)="onFileChange($event)" accept="image/*"  />
+                                     </div>
+                                 </div>
+                             </div> -->
+                             <div class="form-row">
+                                <div class="form-group">
+                                    <label for="">Email</label>
+                                    <input type="email" formControlName="email" class="form-control" placeholder="">
+                                    <!-- <div *ngFor="let validation of validationMessages.name" >
+                                        <span style="font-size: 14px;" class="help-block pull-left text-danger" *ngIf="CategoryForm.get('name').hasError(validation.type) && (CategoryForm.get('name').dirty || CategoryForm.get('name').touched)">{{validation.message}}</span>
+                                    </div> -->
+                                </div>
+                            </div>
+                            
+                             <div class="form-row">
+                                 <div class="form-group">
+                                     <label for="">Name</label>
+                                     <input type="text" formControlName="name" class="form-control" placeholder="">
+                                     <!-- <div *ngFor="let validation of validationMessages.name" >
+                                         <span style="font-size: 14px;" class="help-block pull-left text-danger" *ngIf="CategoryForm.get('name').hasError(validation.type) && (CategoryForm.get('name').dirty || CategoryForm.get('name').touched)">{{validation.message}}</span>
+                                     </div> -->
+                                 </div>
+                             </div>
+                             <div class="form-row">
+                                 <div class="form-group">
+                                     <label for="">Date of Joining</label>
+                                     <input type="date" formControlName="join_date" class="form-control" placeholder="">
+                                     <!-- <div *ngFor="let validation of validationMessages.description" >
+                                         <span style="font-size: 14px;" class="help-block pull-left text-danger" *ngIf="CategoryForm.get('description').hasError(validation.type) && (CategoryForm.get('description').dirty || CategoryForm.get('description').touched)">{{validation.message}}</span>
+                                     </div> -->
+                                 </div>
+                             </div>
+                             <div class="form-row">
+                                <div class="form-group">
+                                    <label for="">Date of Leaving</label>
+                                    <input type="date" formControlName="leave_date" class="form-control" placeholder="">
+                                    <!-- <div *ngFor="let validation of validationMessages.description" >
+                                        <span style="font-size: 14px;" class="help-block pull-left text-danger" *ngIf="CategoryForm.get('description').hasError(validation.type) && (CategoryForm.get('description').dirty || CategoryForm.get('description').touched)">{{validation.message}}</span>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="">Still Working</label>
+                                    <input type="checkbox" formControlName="still_working" placeholder="">
+                                    <!-- <div *ngFor="let validation of validationMessages.description" >
+                                        <span style="font-size: 14px;" class="help-block pull-left text-danger" *ngIf="CategoryForm.get('description').hasError(validation.type) && (CategoryForm.get('description').dirty || CategoryForm.get('description').touched)">{{validation.message}}</span>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="">Upload Image</label>
+                                    <input #myfile type="file" name="myfile" formControlName="myfile" (change)="onFileChange($event)" accept="image/*"/>
+                                    <!-- <div *ngFor="let validation of validationMessages.description" >
+                                        <span style="font-size: 14px;" class="help-block pull-left text-danger" *ngIf="CategoryForm.get('description').hasError(validation.type) && (CategoryForm.get('description').dirty || CategoryForm.get('description').touched)">{{validation.message}}</span>
+                                    </div> -->
+                                </div>
+                            </div>
+                             
+                        
+                     </div>
+                 </div>
+           
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success" >Save</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
